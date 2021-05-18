@@ -2,29 +2,29 @@
 
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/qmessagebox.h>
-#include "ui_SKS_GUI_Refactor.h"
-#include "PannelCom_Serial.h"
+#include "ui_serialKeyboardServer.h"
+#include "serialPannel.h"
 #include <iostream>
-#include "vKey.h"
+#include "virtualKey.h"
 #include <qevent.h>
 #include "console.h"
 #include <string>
 #include <iostream>
 #include <fstream>
 
-class SKS_GUI_Refactor : public QMainWindow
+class SerialKeyboardServer : public QMainWindow
 {
 	Q_OBJECT
 
 public:
-	SKS_GUI_Refactor(QWidget *parent = Q_NULLPTR);
+	SerialKeyboardServer(QWidget *parent = Q_NULLPTR);
 
 private:
-	Ui::SKS_GUI_RefactorClass ui;
+	Ui::SerialKeyboardServerClass ui;
 
-	PannelCom_Serial* pannel;
+	SerialPannel* pannel;
 	bool waitingKeyGrab[6] = { false,false,false,false,false,false };
-	vKey keys[6];
+	VirtualKey keys[6];
 	bool hold[6];
 	Console* console;
 

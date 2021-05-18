@@ -2,15 +2,15 @@
 #include <list>
 #include <QtSerialPort/qserialport.h>
 
-class PannelCom_Serial : public QObject
+class SerialPannel : public QObject
 {
-	Q_OBJECT //Pour pouvoir utiliser les signals/slot
+	Q_OBJECT // For signal/slot
 	public:
 
 
-		PannelCom_Serial(const std::string port,const QSerialPort::BaudRate baudRate);
-		PannelCom_Serial(const QSerialPort::BaudRate baudRate);
-		~PannelCom_Serial(void);
+		SerialPannel(const std::string port,const QSerialPort::BaudRate baudRate);
+		SerialPannel(const QSerialPort::BaudRate baudRate);
+		~SerialPannel(void);
 
 		/**
 		 * Set the serial port of the switch pannel

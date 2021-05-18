@@ -1,8 +1,8 @@
-#include <SKS_GUI/SKS_GUI_Refactor.h>
+#include <SKS_GUI/SerialKeyboardServer.h>
 
 using namespace std;
 
-SKS_GUI_Refactor::SKS_GUI_Refactor(QWidget *parent)
+SerialKeyboardServer::SerialKeyboardServer(QWidget *parent)
 	: QMainWindow(parent)
 {
 	this->setWindowIcon(QIcon("icon.png"));
@@ -15,15 +15,15 @@ SKS_GUI_Refactor::SKS_GUI_Refactor(QWidget *parent)
 		hold[i] = false;
 	}
 
-	pannel = new PannelCom_Serial(QSerialPort::Baud9600);
-	// Directly connect to the QSerialPort signal as signal forwarding doesn't seem to work anymore, VERY UGLY as we bypass the stateChanged() signal of PannelCom_Serial
-	connect(pannel->getQSerialPort(), &QSerialPort::readyRead, this, &SKS_GUI_Refactor::serialData_Received);
-	on_actionLoad_configuration_triggered();//Auto load settings on startup
+	pannel = new SerialPannel(QSerialPort::Baud9600);
+	// Directly connect to the QSerialPort signal as signal forwarding doesn't seem to work anymore, VERY UGLY as we bypass the stateChanged() signal of SerialPannel
+	connect(pannel->getQSerialPort(), &QSerialPort::readyRead, this, &SerialKeyboardServer::serialData_Received);
+	on_actionLoad_configuration_triggered();// Auto load settings on startup
 }
 
-void SKS_GUI_Refactor::on_KeyGrab1_clicked()
+void SerialKeyboardServer::on_KeyGrab1_clicked()
 {
-	//Vérification d'autres boutons en attente
+	// Check if other keybind grabber waiting
 	bool allFalse = true;
 	for (bool b : waitingKeyGrab)
 	{
@@ -31,7 +31,7 @@ void SKS_GUI_Refactor::on_KeyGrab1_clicked()
 			allFalse = false;
 	}
 
-	//Si aucun autre bouton est appuyé
+	// If no other keybind grabber triggered
 	if (allFalse)
 	{
 		waitingKeyGrab[0] = true;
@@ -42,7 +42,7 @@ void SKS_GUI_Refactor::on_KeyGrab1_clicked()
 		ui.KeyGrab5->setDisabled(true);
 		ui.KeyGrab6->setDisabled(true);
 	}
-	else if (waitingKeyGrab[0]) //Sinon, si ce bouton est deja appuyé revenir à l'état initial
+	else if (waitingKeyGrab[0]) // Else, if this keybind grabber is already waiting reset it
 	{
 		ui.KeyGrab1->setText("Appuyer pour configurer");
 		ui.KeyGrab2->setDisabled(false);
@@ -55,9 +55,9 @@ void SKS_GUI_Refactor::on_KeyGrab1_clicked()
 	
 }
 
-void SKS_GUI_Refactor::on_KeyGrab2_clicked()
+void SerialKeyboardServer::on_KeyGrab2_clicked()
 {
-	//Vérification d'autres boutons en attente
+	// Check if other keybind grabber waiting
 	bool allFalse = true;
 
 	for (bool b : waitingKeyGrab)
@@ -65,7 +65,7 @@ void SKS_GUI_Refactor::on_KeyGrab2_clicked()
 		if (b)
 			allFalse = false;
 	}
-	//Si aucun autre bouton est appuyé
+	// If no other keybind grabber triggered
 	if (allFalse)
 	{
 		waitingKeyGrab[1] = true;
@@ -76,7 +76,7 @@ void SKS_GUI_Refactor::on_KeyGrab2_clicked()
 		ui.KeyGrab5->setDisabled(true);
 		ui.KeyGrab6->setDisabled(true);
 	}
-	else if (waitingKeyGrab[1]) //Sinon, si ce bouton est deja appuyé revenir à l'état initial
+	else if (waitingKeyGrab[1]) // Else, if this keybind grabber is already waiting reset it
 	{
 		ui.KeyGrab2->setText("Appuyer pour configurer");
 		ui.KeyGrab1->setDisabled(false);
@@ -88,16 +88,16 @@ void SKS_GUI_Refactor::on_KeyGrab2_clicked()
 	}
 }
 
-void SKS_GUI_Refactor::on_KeyGrab3_clicked()
+void SerialKeyboardServer::on_KeyGrab3_clicked()
 {
-	//Vérification d'autres boutons en attente
+	// Check if other keybind grabber waiting
 	bool allFalse = true;
 	for (bool b : waitingKeyGrab)
 	{
 		if (b)
 			allFalse = false;
 	}
-	//Si aucun autre bouton est appuyé
+	// If no other keybind grabber triggered
 	if (allFalse)
 	{
 		waitingKeyGrab[2] = true;
@@ -108,7 +108,7 @@ void SKS_GUI_Refactor::on_KeyGrab3_clicked()
 		ui.KeyGrab5->setDisabled(true);
 		ui.KeyGrab6->setDisabled(true);
 	}
-	else if (waitingKeyGrab[2]) //Sinon, si ce bouton est deja appuyé revenir à l'état initial
+	else if (waitingKeyGrab[2]) // Else, if this keybind grabber is already waiting reset it
 	{
 		ui.KeyGrab3->setText("Appuyer pour configurer");
 		ui.KeyGrab1->setDisabled(false);
@@ -120,16 +120,16 @@ void SKS_GUI_Refactor::on_KeyGrab3_clicked()
 	}
 }
 
-void SKS_GUI_Refactor::on_KeyGrab4_clicked()
+void SerialKeyboardServer::on_KeyGrab4_clicked()
 {
-	//Vérification d'autres boutons en attente
+	// Check if other keybind grabber waiting
 	bool allFalse = true;
 	for (bool b : waitingKeyGrab)
 	{
 		if (b)
 			allFalse = false;
 	}
-	//Si aucun autre bouton est appuyé
+	// If no other keybind grabber triggered
 	if (allFalse)
 	{
 		waitingKeyGrab[3] = true;
@@ -140,7 +140,7 @@ void SKS_GUI_Refactor::on_KeyGrab4_clicked()
 		ui.KeyGrab5->setDisabled(true);
 		ui.KeyGrab6->setDisabled(true);
 	}
-	else if (waitingKeyGrab[3]) //Sinon, si ce bouton est deja appuyé revenir à l'état initial
+	else if (waitingKeyGrab[3]) // Else, if this keybind grabber is already waiting reset it
 	{
 		ui.KeyGrab4->setText("Appuyer pour configurer");
 		ui.KeyGrab1->setDisabled(false);
@@ -152,16 +152,16 @@ void SKS_GUI_Refactor::on_KeyGrab4_clicked()
 	}
 }
 
-void SKS_GUI_Refactor::on_KeyGrab5_clicked()
+void SerialKeyboardServer::on_KeyGrab5_clicked()
 {
-	//Vérification d'autres boutons en attente
+	// Check if other keybind grabber waiting
 	bool allFalse = true;
 	for (bool b : waitingKeyGrab)
 	{
 		if (b)
 			allFalse = false;
 	}
-	//Si aucun autre bouton est appuyé
+	// If no other keybind grabber triggered
 	if (allFalse)
 	{
 		waitingKeyGrab[4] = true;
@@ -172,7 +172,7 @@ void SKS_GUI_Refactor::on_KeyGrab5_clicked()
 		ui.KeyGrab4->setDisabled(true);
 		ui.KeyGrab6->setDisabled(true);
 	}
-	else if (waitingKeyGrab[4]) //Sinon, si ce bouton est deja appuyé revenir à l'état initial
+	else if (waitingKeyGrab[4]) // Else, if this keybind grabber is already waiting reset it
 	{
 		ui.KeyGrab5->setText("Appuyer pour configurer");
 		ui.KeyGrab1->setDisabled(false);
@@ -184,16 +184,16 @@ void SKS_GUI_Refactor::on_KeyGrab5_clicked()
 	}
 }
 
-void SKS_GUI_Refactor::on_KeyGrab6_clicked()
+void SerialKeyboardServer::on_KeyGrab6_clicked()
 {
-	//Vérification d'autres boutons en attente
+	// Check if other keybind grabber waiting
 	bool allFalse = true;
 	for (bool b : waitingKeyGrab)
 	{
 		if (b)
 			allFalse = false;
 	}
-	//Si aucun autre bouton est appuyé
+	// If no other keybind grabber triggered
 	if (allFalse)
 	{
 		waitingKeyGrab[5] = true;
@@ -204,7 +204,7 @@ void SKS_GUI_Refactor::on_KeyGrab6_clicked()
 		ui.KeyGrab4->setDisabled(true);
 		ui.KeyGrab5->setDisabled(true);
 	}
-	else if (waitingKeyGrab[5]) //Sinon, si ce bouton est deja appuyé revenir à l'état initial
+	else if (waitingKeyGrab[5]) // Else, if this keybind grabber is already waiting reset it
 	{
 		ui.KeyGrab6->setText("Appuyer pour configurer");
 		ui.KeyGrab1->setDisabled(false);
@@ -216,37 +216,37 @@ void SKS_GUI_Refactor::on_KeyGrab6_clicked()
 	}
 }
 
-void SKS_GUI_Refactor::on_Hold1_stateChanged(int state)
+void SerialKeyboardServer::on_Hold1_stateChanged(int state)
 {
 	hold[0] = state;
 }
 
-void SKS_GUI_Refactor::on_Hold2_stateChanged(int state)
+void SerialKeyboardServer::on_Hold2_stateChanged(int state)
 {
 	hold[1] = state;
 }
 
-void SKS_GUI_Refactor::on_Hold3_stateChanged(int state)
+void SerialKeyboardServer::on_Hold3_stateChanged(int state)
 {
 	hold[2] = state;
 }
 
-void SKS_GUI_Refactor::on_Hold4_stateChanged(int state)
+void SerialKeyboardServer::on_Hold4_stateChanged(int state)
 {
 	hold[3] = state;
 }
 
-void SKS_GUI_Refactor::on_Hold5_stateChanged(int state)
+void SerialKeyboardServer::on_Hold5_stateChanged(int state)
 {
 	hold[4] = state;
 }
 
-void SKS_GUI_Refactor::on_Hold6_stateChanged(int state)
+void SerialKeyboardServer::on_Hold6_stateChanged(int state)
 {
 	hold[5] = state;
 }
 
-void SKS_GUI_Refactor::on_ButtonStart_clicked()
+void SerialKeyboardServer::on_ButtonStart_clicked()
 {
 	pannel->disconnect();
 	ui.labelStatus->setText("Server stopped");
@@ -295,7 +295,7 @@ void SKS_GUI_Refactor::on_ButtonStart_clicked()
 	}
 }
 
-void SKS_GUI_Refactor::on_ButtonStop_clicked()
+void SerialKeyboardServer::on_ButtonStop_clicked()
 {
 	pannel->disconnectSerial();
 	console->putData("> Port ");
@@ -305,7 +305,7 @@ void SKS_GUI_Refactor::on_ButtonStop_clicked()
 	ui.progressBar->setMaximum(1);
 }
 
-void SKS_GUI_Refactor::keyPressEvent(QKeyEvent* evt)
+void SerialKeyboardServer::keyPressEvent(QKeyEvent* evt)
 {
 	int scancode = evt->nativeScanCode();
 	
@@ -353,7 +353,7 @@ void SKS_GUI_Refactor::keyPressEvent(QKeyEvent* evt)
 
 }
 
-void SKS_GUI_Refactor::serialData_Received(void)
+void SerialKeyboardServer::serialData_Received(void)
 {
 	switch (pannel->getSwitched())
 	{
@@ -438,7 +438,7 @@ void SKS_GUI_Refactor::serialData_Received(void)
 	}
 }
 
-void SKS_GUI_Refactor::on_actionSave_configuration_triggered()
+void SerialKeyboardServer::on_actionSave_configuration_triggered()
 {
 	ofstream file;
 
@@ -456,15 +456,15 @@ void SKS_GUI_Refactor::on_actionSave_configuration_triggered()
 	console->putData("> Settings successfully saved\n");
 }
 
-void SKS_GUI_Refactor::on_actionLoad_configuration_triggered()
+void SerialKeyboardServer::on_actionLoad_configuration_triggered()
 {
 	ifstream file;
 	string line;
 	char* lineChar;
 
-	QPushButton* keyGrabArray[6]; //Array of the keygrabs, used to simplify the code when using for loop
-	QCheckBox* holdChecksArray[6]; //Array of the checkboxes, used to simplify the code when using for loop
-	QLineEdit* namesArray[6]; //Array of the names, used to simplify the code when using for loop
+	QPushButton* keyGrabArray[6]; // Array of the keygrabs, used to simplify the code when using for loop
+	QCheckBox* holdChecksArray[6]; // Array of the checkboxes, used to simplify the code when using for loop
+	QLineEdit* namesArray[6]; // Array of the names, used to simplify the code when using for loop
 
 	keyGrabArray[0] = ui.KeyGrab1;
 	keyGrabArray[1] = ui.KeyGrab2;
@@ -491,36 +491,36 @@ void SKS_GUI_Refactor::on_actionLoad_configuration_triggered()
 	if (file) {
 		for (int i = 0; i < 6; i++)
 		{
-			getline(file, line); //Read a line of the cfg file("name:text:scancode:holdstate")
-			lineChar = strdup(line.c_str()); //Convert it to char* to use strtok
-			lineChar = strtok(lineChar, ":"); //Search first token : name
+			getline(file, line); // Read a line of the cfg file("name:text:scancode:holdstate")
+			lineChar = strdup(line.c_str()); // Convert it to char* to use strtok
+			lineChar = strtok(lineChar, ":"); // Search first token : name
 			namesArray[i]->setText(lineChar);
-			lineChar = strtok(NULL, ":"); //Search second token : text
+			lineChar = strtok(NULL, ":"); // Search second token : text
 			keyGrabArray[i]->setText(lineChar);
-			lineChar = strtok(NULL, ":"); //Search third token : scancode
+			lineChar = strtok(NULL, ":"); // Search third token : scancode
 			keys[i].setKey(atoi(lineChar));
-			lineChar = strtok(NULL, ":"); //Search fourth token : holdstate
+			lineChar = strtok(NULL, ":"); // Search fourth token : holdstate
 			hold[i] = atoi(lineChar);
 			holdChecksArray[i]->setChecked(hold[i]);
 		}
-		getline(file, line); //Get last line : COM port
+		getline(file, line); // Get last line : COM port
 		ui.InputPort->setText(QString::fromStdString(line));
 		file.close();
 		console->putData("> Settings successfully loaded\n");
 	}
 }
 
-void SKS_GUI_Refactor::on_actionQuit_triggered()
+void SerialKeyboardServer::on_actionQuit_triggered()
 {
 	qApp->quit();
 }
 
-void SKS_GUI_Refactor::on_actionHelp_triggered()
+void SerialKeyboardServer::on_actionHelp_triggered()
 {
 	QMessageBox::information(this, "Serial Keyboard Server Help", "Not implemented yet, sorry !");
 }
 
-void SKS_GUI_Refactor::on_actionAbout_triggered()
+void SerialKeyboardServer::on_actionAbout_triggered()
 {
 	QMessageBox::about(this, "About Serial Keyboard Server", "Serial Keyboard Server 0.0220\n01/02/2020\n\nDevelopped by : Thomas Tabuteau\nUsing : Qt and Visual Studio\nGitHub : https://github.com/ThomasTab");
 }

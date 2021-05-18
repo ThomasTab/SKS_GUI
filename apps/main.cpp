@@ -1,12 +1,12 @@
-#include <SKS_GUI/SKS_GUI_Refactor.h>
+#include <SKS_GUI/serialKeyboardServer.h>
 #include <QtWidgets/QApplication>
 
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
-	SKS_GUI_Refactor w;
+	SerialKeyboardServer w;
 	w.show();
-	w.setFixedSize(w.size()); //Désactive le redimensionnement
+	w.setFixedSize(w.size()); // Disable resizing
 	return a.exec();
 }

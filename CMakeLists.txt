@@ -22,16 +22,16 @@ include_directories("${PROJECT_SOURCE_DIR}/include")
 
 add_executable(SKS_GUI
     "${PROJECT_SOURCE_DIR}/apps/main.cpp"
-    "${PROJECT_SOURCE_DIR}/ui/SKS_GUI_Refactor.ui"
-    "${PROJECT_SOURCE_DIR}/ui/SKS_GUI_Refactor.qrc"
+    "${PROJECT_SOURCE_DIR}/ui/serialKeyboardServer.ui"
+    "${PROJECT_SOURCE_DIR}/ui/serialKeyboardServer.qrc"
     "${PROJECT_SOURCE_DIR}/src/console.cpp"
-    "${PROJECT_SOURCE_DIR}/src/PannelCom_Serial.cpp"
-    "${PROJECT_SOURCE_DIR}/src/vKey.cpp"
-    "${PROJECT_SOURCE_DIR}/src/SKS_GUI_Refactor.cpp"
+    "${PROJECT_SOURCE_DIR}/src/serialPannel.cpp"
+    "${PROJECT_SOURCE_DIR}/src/virtualKey.cpp"
+    "${PROJECT_SOURCE_DIR}/src/serialKeyboardServer.cpp"
     "${PROJECT_SOURCE_DIR}/include/SKS_GUI/console.h"
-    "${PROJECT_SOURCE_DIR}/include/SKS_GUI/PannelCom_Serial.h"
-    "${PROJECT_SOURCE_DIR}/include/SKS_GUI/vKey.h"
-    "${PROJECT_SOURCE_DIR}/include/SKS_GUI/SKS_GUI_Refactor.h"
+    "${PROJECT_SOURCE_DIR}/include/SKS_GUI/serialPannel.h"
+    "${PROJECT_SOURCE_DIR}/include/SKS_GUI/virtualKey.h"
+    "${PROJECT_SOURCE_DIR}/include/SKS_GUI/serialKeyboardServer.h"
 )
 
 target_link_libraries(SKS_GUI Qt5::Core Qt5::Widgets Qt5::SerialPort)

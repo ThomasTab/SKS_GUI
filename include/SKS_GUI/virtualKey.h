@@ -3,12 +3,12 @@
 #include <Windows.h>
 #include <list>
 
-class vKey
+class VirtualKey
 {
 	public:
-		vKey(int hwScanCode);
-		vKey();
-		~vKey();
+		VirtualKey(int hwScanCode);
+		VirtualKey();
+		~VirtualKey();
 
 		/**
 		 * Simulate the holding of this virtual key
@@ -39,7 +39,7 @@ class vKey
 
 	private:
 		int _hwScanCode;
-		INPUT* _vKeyboard;
+		INPUT* _virtualKeyboard;
 
 };
 

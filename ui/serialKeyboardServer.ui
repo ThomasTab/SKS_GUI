@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SKS_GUI_RefactorClass</class>
- <widget class="QMainWindow" name="SKS_GUI_RefactorClass">
+ <class>SerialKeyboardServerClass</class>
+ <widget class="QMainWindow" name="SerialKeyboardServerClass">
   <property name="enabled">
    <bool>true</bool>
   </property>
@@ -697,7 +697,7 @@ border: 1px solid #5A5A5A;
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="SKS_GUI_Refactor.qrc"/>
+  <include location="serialKeyboardServer.qrc"/>
  </resources>
  <connections/>
 </ui>
